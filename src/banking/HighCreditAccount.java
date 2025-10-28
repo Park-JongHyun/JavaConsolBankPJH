@@ -1,6 +1,6 @@
 package banking;
 
-public class HihgCreditAccount {
+public class HighCreditAccount {
 
 	public static void main(String[] args) {
 		
