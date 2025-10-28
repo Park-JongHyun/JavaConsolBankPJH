@@ -26,7 +26,7 @@ public class AccountManager {
 		System.out.print("잔고:"); imoney = BankingSystemMain.scan.nextInt();
 		BankingSystemMain.scan.nextLine();
 		
-		Account acc = new Account(inum, iname, imoney);
+		Account acc = new Account(inum, iname, imoney,0);
 		accounts[numOfaccount++]=acc;
 		
 		System.out.println("계좌개설이 완료되었습니다.");
@@ -45,7 +45,7 @@ public class AccountManager {
 				
 				System.out.print("입금액:");
 				int money = BankingSystemMain.scan.nextInt();
-				accounts[i].save+=money;
+				accounts[i].depositMoney(money);
 				System.out.println("입금이 완료되었습니다");
 			}
 		}
@@ -64,10 +64,10 @@ public class AccountManager {
 		
 		for( int i = 0; i<numOfaccount; i++) {
 			if(searchnum.compareTo(accounts[i].num)==0) {
-				accounts[i].withdrawMoney();
+				accounts[i].withdrawMoney(money);
 				isFind = true;
 				
-				accounts[i].save-=money;
+				
 			}
 		}
 		

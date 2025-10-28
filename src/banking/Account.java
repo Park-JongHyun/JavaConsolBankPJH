@@ -2,16 +2,17 @@ package banking;
 
 public class Account {
 	
-	public String num;
-	public String name;
-	public int save;
-	public int money;
+	public String num;//계좌번호
+	public String name;//고객이름
+	public int save;//잔고
+	public int amount;//입/출금액
 	
 	
-	public Account(String num, String name,int save) {
+	public Account(String num, String name,int save,int amount) {
 		this.num = num;
 		this.name = name;
 		this.save = save;
+		this.amount = amount;
 	}
 	
 	void showAccInfo() {
@@ -23,15 +24,23 @@ public class Account {
 		System.out.println("-------------\n");
 		}
 	
-	void depositMoney() {
-		System.out.println("계좌번호:"+num);
-		System.out.println("입금액:"+money);
-		System.out.println("잔고:"+save+money);
+	void depositMoney(int amount) {
+		save+=amount;
+//		System.out.println("계좌번호:"+num);
+//		System.out.println("입금액:"+amount);
+//		System.out.println("잔고:"+save);
 	}
 
-	void withdrawMoney() {
-		
+	void withdrawMoney(int amount) {
+		save-=amount;
+//		System.out.println("계좌번호:"+num);
+//		System.out.println("출금액:"+amount);
+//		System.out.println("잔고:"+save);
 	}
+
+	
+
+	
 	
 	//계좌정보 표현 클래스(부모클래스)
 	}
