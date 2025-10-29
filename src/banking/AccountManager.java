@@ -1,5 +1,6 @@
 package banking;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class AccountManager {
@@ -55,14 +56,29 @@ public class AccountManager {
 			if(searchnum.compareTo(accounts[i].num)==0) {
 				isFind=true;
 				
+				try {
 				System.out.print("입금액:");
 				int money = BankingSystemMain.scan.nextInt();
-				accounts[i].depositMoney(money);
-				System.out.println("입금이 완료되었습니다.\n");
+				
+					if (money<0) {
+						System.out.println("음수는 입금이 불가능합니다.");
+						return;
+					}
+					else if (money % 500 != 0) {
+						System.out.println("500원 단위로 입금가능함");
+						return;
+					}
+					accounts[i].depositMoney(money);
+					System.out.println("입금이 완료되었습니다.\n");
+					}
+				catch(InputMismatchException e){
+					System.out.println("문자는 입력할 수 없습니다.");
+					BankingSystemMain.scan.nextLine();
+					}
 			}
 		}
 	}
-	
+		
 	public void withdrawMoney() {
 		System.out.println("***출 금***");
 		System.out.println("계좌번호와 출금할 금액을 입력하세요");
@@ -71,15 +87,39 @@ public class AccountManager {
 		System.out.print("계좌번호:");
 		String searchnum = BankingSystemMain.scan.nextLine();
 		
-		System.out.print("출금액:");
-		int money = BankingSystemMain.scan.nextInt();
 		
 		for( int i = 0; i<numOfaccount; i++) {
 			if(searchnum.compareTo(accounts[i].num)==0) {
-				accounts[i].withdrawMoney(money);
-				isFind = true;
-				
-				
+				try {
+					System.out.print("출금액:");
+					int money = BankingSystemMain.scan.nextInt();
+					if(money<0) {
+						System.out.println("음수는 출금이 불가능합니다.");
+						return;
+					}
+					else if (money % 1000 != 0) {
+						System.out.println("1000단위로 출금 가능합니다");
+						return;
+					}
+					
+					else if (accounts[i].save<money) {
+						System.out.println("잔고 부족. 금액전체를 출금할까요?(y or n)");
+		                char choice = BankingSystemMain.scan.next().charAt(0);
+		                if(choice == 'Y' || choice == 'y') {
+		                    money = accounts[i].save; 
+		                } 
+		                else {
+		                    System.out.println("출금 취소");
+		                    return;
+		                }
+					}
+					accounts[i].withdrawMoney(money);
+					isFind = true;
+				}
+				catch(InputMismatchException e){
+					System.out.println("문자는 입력할 수 없습니다.");
+					BankingSystemMain.scan.nextLine();
+				}
 			}
 		}
 		
