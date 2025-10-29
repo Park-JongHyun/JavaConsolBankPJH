@@ -27,7 +27,15 @@ public static void main(String[] args) {
 		
 		switch(choice) {
 		case 1:
-			manager.makeaccount(choice);
+			System.out.println("***신규게좌개설");
+			System.out.println("-----계좌선택-----");
+			System.out.println("1.보통계좌");
+			System.out.println("2.신용신뢰계좌");
+			System.out.print("선택:");
+			int accounttype = scan.nextInt();
+			scan.nextLine();
+			
+			manager.makeaccount(accounttype);
 			break;
 		case 2:
 			manager.depositMoney();

@@ -17,19 +17,31 @@ public class AccountManager {
 	
 	public void makeaccount(int choice) {
 		
-		String inum,iname;
-		int imoney;
+		String inum,iname,grade;
+		int isave,interest;
 		
 		System.out.println("***신규계좌개설***");
 		System.out.print("계좌번호:"); inum = BankingSystemMain.scan.nextLine();
 		System.out.print("고객이름:"); iname = BankingSystemMain.scan.nextLine();
-		System.out.print("잔고:"); imoney = BankingSystemMain.scan.nextInt();
+		System.out.print("잔고:"); isave = BankingSystemMain.scan.nextInt();
 		BankingSystemMain.scan.nextLine();
 		
-		Account acc = new Account(inum, iname, imoney,0);
-		accounts[numOfaccount++]=acc;
+		if(choice ==1) {
+			System.out.print("기본이자%(정수형태로입력): ");interest = BankingSystemMain.scan.nextInt();
+			BankingSystemMain.scan.nextLine();//버퍼처리
+			NormalAccount nlacnt = new NormalAccount(inum,iname,isave,interest);
+			accounts[numOfaccount++]=nlacnt;
+		}
+		else if(choice ==2) {
+			System.out.print("기본이자%(정수형태로입력): ");interest = BankingSystemMain.scan.nextInt();
+			BankingSystemMain.scan.nextLine();
+			System.out.print("신용등급(A,B,C 등급): ");grade = BankingSystemMain.scan.nextLine();
+			
+			HighCreditAccount hcacnt = new HighCreditAccount(inum, iname, grade, isave, interest);
+			accounts[numOfaccount++]= hcacnt;
+		}
 		
-		System.out.println("계좌개설이 완료되었습니다.");
+		System.out.println("계좌개설이 완료되었습니다.\n");
 	}
 	
 	public void depositMoney() {
@@ -46,7 +58,7 @@ public class AccountManager {
 				System.out.print("입금액:");
 				int money = BankingSystemMain.scan.nextInt();
 				accounts[i].depositMoney(money);
-				System.out.println("입금이 완료되었습니다");
+				System.out.println("입금이 완료되었습니다.\n");
 			}
 		}
 	}
@@ -71,15 +83,17 @@ public class AccountManager {
 			}
 		}
 		
-		System.out.println("출금이 완료되었습니다.");
+		System.out.println("출금이 완료되었습니다.\n");
 	}
 	
 	
 	public void showAccInfo() {
+		System.out.println("***계좌정보출력***");
 		for(int i = 0; i<numOfaccount; i++) {
 			accounts[i].showAccInfo();
 		}
-		System.out.println("전체계좌정보 출력이 완료되었습니다.");
+		System.out.println("-------------");
+		System.out.println("전체계좌정보 출력이 완료되었습니다.\n");
 	}
 }
 

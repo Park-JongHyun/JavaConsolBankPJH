@@ -1,19 +1,23 @@
 package banking;
 
 public class NormalAccount extends Account{ 
-
-	public NormalAccount(String num, String name, int save, int interestRate) {
-		super(num, name, save,0);
+	int interest;
+	
+	public NormalAccount(String num, String name, int save, int interest) {
+		super(num, name, save);
+		this.interest = interest;
 	}
 
 	@Override
-	public void depositMoney(int amount) {
-		super.depositMoney(amount);
-		save = save + (int) ((save*0.02) + amount) ;
+	public void depositMoney(int money) {
+		save += (save*interest/100) ;
+		save += money ;
 		}
 	
-	
-	public static void main(String[] args) {
-	 
+	@Override
+	void showAccInfo() {
+		super.showAccInfo();
+		System.out.println("기본이자 > "+interest+"%");
+		
 	}
-} 
+}
