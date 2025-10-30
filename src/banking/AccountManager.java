@@ -59,6 +59,7 @@ public class AccountManager {
 				try {
 				System.out.print("입금액:");
 				int money = BankingSystemMain.scan.nextInt();
+				BankingSystemMain.scan.nextLine();
 				
 					if (money<0) {
 						System.out.println("음수는 입금이 불가능합니다.");
@@ -135,6 +136,15 @@ public class AccountManager {
 		System.out.println("-------------");
 		System.out.println("전체계좌정보 출력이 완료되었습니다.\n");
 	}
+	
+	
+//	public void deleteaccount{
+//		System.out.println("***계좌정보 삭제***");
+//		System.out.println("삭제할 계좌 번호를 입력하세요");
+//		System.out.println("일치하는 계좌가 없습니다");
+//	}
+	
+	
 }
 
 

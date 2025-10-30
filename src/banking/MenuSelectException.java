@@ -1,17 +1,39 @@
 package banking;
-	
-//	메뉴 선택
-//	메뉴선택할때 문자를 입력할 수 없다
-//	지정된 정수이외의 숫자를 입력할 경우(개발자정의 예외처리)
+
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
 
+public class MenuSelectException extends Exception {
+
+    public MenuSelectException() {
+        super("메뉴 입력 예외 발생됨");
+    }
 
 
-//public class MenuSelectException {
-//
-//	public static void main(String[] args) {
-//		// 예외 클래스
-//
-//	}
-//
-//}
+    public static int selectMenu() throws MenuSelectException {
+        Scanner scan = BankingSystemMain.scan; 
+        
+        String line ;
+        int choice;
+
+        line = scan.nextLine();
+        try {
+        	choice = Integer.parseInt(line);
+            
+        } catch (NumberFormatException e) {
+        	System.out.println("메뉴 입력 예외 발생됨");
+        	System.out.println("메뉴는 1~5사이의 정수를 입력하세요");
+            throw new MenuSelectException();
+        }
+
+        
+        if (choice < 1 || choice > 5) {
+        	System.out.println("메뉴 입력 예외 발생됨");
+        	System.out.println("메뉴는 1~5사이의 정수를 입력하세요");
+            throw new MenuSelectException();
+        }
+
+        return choice;
+    }
+}

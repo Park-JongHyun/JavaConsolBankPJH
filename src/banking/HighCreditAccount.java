@@ -13,15 +13,15 @@ public class HighCreditAccount extends Account {
 		
 		grade = grade.toUpperCase();
 		
-		if (grade.equals("A")) this.extrainterest = 7;
-		else if (grade.equals("B"))this.extrainterest = 4;
-		else this.extrainterest = 2;
 	}
 
 	
 	@Override
 	public void depositMoney(int money) {
 		save = save+(save*interest/100)+(save*extrainterest/100)+money;
+		if (grade.equals("A")) this.extrainterest = addinterest.High;
+		else if (grade.equals("B"))this.extrainterest = addinterest.Normal;
+		else this.extrainterest = addinterest.Low;
 	}
 	
 	@Override

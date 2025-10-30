@@ -15,6 +15,19 @@ public abstract class Account {
 		
 	}
 	
+//	@Override
+//	public int hashCode() {}
+//	
+//	@Override
+//	public boolean equals(Object obj) {
+//		if() {
+//			return true;
+//		}
+//		else {
+//			return false;
+//		}
+//	}
+	
 	void showAccInfo() {
 		
 		System.out.println("-------------");
