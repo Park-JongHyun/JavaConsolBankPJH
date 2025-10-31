@@ -1,49 +1,69 @@
 package banking;
 
+import java.util.HashSet;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+
 public class AccountManager {
 	
-	// 컨트롤 클래스로 프로그램의 전반적인 기능
-	private Account[] accounts;
-	private int numOfaccount;
+	
+	private HashSet<Account> accountsSet = new HashSet<>();
+	public AccountManager() {
+	}
 
 	
-	
-	public AccountManager (int num) {
-		accounts = new Account[num]; 
-		numOfaccount = 0;
-	}
-	
-	public void makeaccount(int choice) {
+	public void makeaccount() {
+		
+		System.out.println("***신규계좌개설***");
+		System.out.println("-----계좌선택-----");
+		System.out.println("1.보통계좌");
+		System.out.println("2.신용신뢰계좌");
+		System.out.print("선택:");
+		int choice = BankingSystemMain.scan.nextInt();
+		BankingSystemMain.scan.nextLine();
+		
 		
 		String inum,iname,grade;
 		int isave,interest;
 		
-		System.out.println("***신규계좌개설***");
 		System.out.print("계좌번호:"); inum = BankingSystemMain.scan.nextLine();
 		System.out.print("고객이름:"); iname = BankingSystemMain.scan.nextLine();
 		System.out.print("잔고:"); isave = BankingSystemMain.scan.nextInt();
 		BankingSystemMain.scan.nextLine();
 		
+		Account newAcc = null;
+		
 		if(choice ==1) {
 			System.out.print("기본이자%(정수형태로입력): ");interest = BankingSystemMain.scan.nextInt();
 			BankingSystemMain.scan.nextLine();//버퍼처리
-			NormalAccount nlacnt = new NormalAccount(inum,iname,isave,interest);
-			accounts[numOfaccount++]=nlacnt;
+			 newAcc = new NormalAccount(inum, iname, isave, interest);
 		}
 		else if(choice ==2) {
 			System.out.print("기본이자%(정수형태로입력): ");interest = BankingSystemMain.scan.nextInt();
 			BankingSystemMain.scan.nextLine();
 			System.out.print("신용등급(A,B,C 등급): ");grade = BankingSystemMain.scan.nextLine();
-			
-			HighCreditAccount hcacnt = new HighCreditAccount(inum, iname, grade, isave, interest);
-			accounts[numOfaccount++]= hcacnt;
+			newAcc = new HighCreditAccount(inum, iname, grade, isave, interest);
 		}
 		
-		System.out.println("계좌개설이 완료되었습니다.\n");
+		if (accountsSet.contains(newAcc)) {
+	        System.out.print("중복계좌 발견됨. 덮어쓸까요? (y or n): ");
+	        char ch = BankingSystemMain.scan.next().charAt(0);
+	        BankingSystemMain.scan.nextLine(); // 버퍼 처리
+	        if (ch == 'y' || ch == 'Y') {
+	            accountsSet.remove(newAcc); // 기존 계좌 삭제
+	            accountsSet.add(newAcc);    // 새 계좌 추가
+	            System.out.println("새로운 정보로 갱신되었습니다.");
+	        } else {
+	            System.out.println("취소되었습니다.");
+	        }
+	    } else {
+	        accountsSet.add(newAcc);
+		
+	        System.out.println("계좌개설이 완료되었습니다.");
+	        }
 	}
+
 	
 	public void depositMoney() {
 		System.out.println("***입 금***");
@@ -52,8 +72,8 @@ public class AccountManager {
 		boolean isFind = false;
 		System.out.print("계좌번호:");
 		String searchnum = BankingSystemMain.scan.nextLine();
-		for(int i=0; i<numOfaccount; i++) {
-			if(searchnum.compareTo(accounts[i].num)==0) {
+		for(Account acc : accountsSet) {
+			if(acc.num.equals(searchnum)) {
 				isFind=true;
 				
 				try {
@@ -69,7 +89,7 @@ public class AccountManager {
 						System.out.println("500원 단위로 입금가능함");
 						return;
 					}
-					accounts[i].depositMoney(money);
+					acc.depositMoney(money);
 					System.out.println("입금이 완료되었습니다.\n");
 					}
 				catch(InputMismatchException e){
@@ -89,8 +109,8 @@ public class AccountManager {
 		String searchnum = BankingSystemMain.scan.nextLine();
 		
 		
-		for( int i = 0; i<numOfaccount; i++) {
-			if(searchnum.compareTo(accounts[i].num)==0) {
+		for(Account acc : accountsSet) {
+			if(acc.num.equals(searchnum)) {
 				try {
 					System.out.print("출금액:");
 					int money = BankingSystemMain.scan.nextInt();
@@ -103,18 +123,18 @@ public class AccountManager {
 						return;
 					}
 					
-					else if (accounts[i].save<money) {
+					else if (acc.save<money) {
 						System.out.println("잔고 부족. 금액전체를 출금할까요?(y or n)");
 		                char choice = BankingSystemMain.scan.next().charAt(0);
 		                if(choice == 'Y' || choice == 'y') {
-		                    money = accounts[i].save; 
+		                    money = acc.save; 
 		                } 
 		                else {
 		                    System.out.println("출금 취소");
 		                    return;
 		                }
 					}
-					accounts[i].withdrawMoney(money);
+					acc.withdrawMoney(money);
 					isFind = true;
 				}
 				catch(InputMismatchException e){
@@ -130,21 +150,30 @@ public class AccountManager {
 	
 	public void showAccInfo() {
 		System.out.println("***계좌정보출력***");
-		for(int i = 0; i<numOfaccount; i++) {
-			accounts[i].showAccInfo();
+		for(Account acc : accountsSet) {
+			acc.showAccInfo();
 		}
 		System.out.println("-------------");
 		System.out.println("전체계좌정보 출력이 완료되었습니다.\n");
 	}
 	
 	
-//	public void deleteaccount{
-//		System.out.println("***계좌정보 삭제***");
-//		System.out.println("삭제할 계좌 번호를 입력하세요");
-//		System.out.println("일치하는 계좌가 없습니다");
-//	}
 	
-	
-}
+	public void deleteaccount(){
+		System.out.println("***계좌정보 삭제***");
+		System.out.print("삭제할 계좌 번호를 입력하세요\n계좌번호: ");
+		String num  = BankingSystemMain.scan.nextLine();
+		
+		Account dummy = new NormalAccount(num, "", 0, 0);
 
+		
+		if (accountsSet.remove(dummy)) {
+			System.out.println("계좌가 삭제되었습니다.");
+		}
+		else {
+		System.out.println("일치하는 계좌가 없습니다.");
+		}
+	}
+}
+	
 

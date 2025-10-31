@@ -8,6 +8,7 @@ public abstract class Account {
 	
 	
 	
+	
 	public Account(String num, String name,int save) {
 		this.num = num;
 		this.name = name;
@@ -15,18 +16,18 @@ public abstract class Account {
 		
 	}
 	
-//	@Override
-//	public int hashCode() {}
-//	
-//	@Override
-//	public boolean equals(Object obj) {
-//		if() {
-//			return true;
-//		}
-//		else {
-//			return false;
-//		}
-//	}
+	@Override
+	public int hashCode() {
+		return this.num.hashCode();}
+		
+	@Override
+	public boolean equals(Object obj) {
+		if(this == obj) return true;
+		if (!(obj instanceof Account)) return false;
+		Account ac = (Account) obj;
+		return this.num != null && this.num.equals(ac.num);
+	}
+	
 	
 	void showAccInfo() {
 		
@@ -43,6 +44,10 @@ public abstract class Account {
 	
 	void withdrawMoney(int money) {
 		save-=money;
+	}
+	
+	void deleteaccount() {
+		
 	}
 }
 //계좌정보 표현 클래스(부모클래스)
