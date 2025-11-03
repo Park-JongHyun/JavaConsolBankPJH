@@ -8,15 +8,15 @@ public class HighCreditAccount extends Account {
 	public HighCreditAccount(
 			String num, String name, String grade, int save,int interest) {
 		super(num, name, save);
-		this.interest = interest;
-		this.grade = grade;
+		this.interest = interest;//이자
+		this.grade = grade;//등급
 		
-		grade = grade.toUpperCase();
+		grade = grade.toUpperCase();//대문자로 인식
 		
 	}
 
 	
-	@Override
+	@Override//계좌상속
 	public void depositMoney(int money) {
 		save = save+(save*interest/100)+(save*extrainterest/100)+money;
 		if (grade.equals("A")) this.extrainterest = addinterest.High;

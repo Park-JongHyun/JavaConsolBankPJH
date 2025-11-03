@@ -1,5 +1,5 @@
 package banking;
-
+//인터페이스 상수
 interface menu{
 	public static final int Makeaccount =1;
 	public static final int Deposit =2;

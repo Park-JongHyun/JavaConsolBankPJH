@@ -8,7 +8,7 @@ public class NormalAccount extends Account{
 		this.interest = interest;
 	}
 
-	@Override
+	@Override//계좌 상속
 	public void depositMoney(int money) {
 		save += (save*interest/100) ;
 		save += money ;

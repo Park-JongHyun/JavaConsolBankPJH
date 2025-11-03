@@ -16,7 +16,7 @@ public abstract class Account {
 		
 	}
 	
-	@Override
+	@Override//컬렉션 오버라이딩
 	public int hashCode() {
 		return this.num.hashCode();}
 		

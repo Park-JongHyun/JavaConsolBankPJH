@@ -31,7 +31,7 @@ public static void main(String[] args) {
 	    } catch (MenuSelectException e) {
 	    	
 	        continue;
-	    }
+	    }//예외처리
 	
 		switch(choice) {
 		case menu.Makeaccount:
