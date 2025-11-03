@@ -83,7 +83,7 @@ public class AccountManager {
 				
 					if (money<0) {
 						System.out.println("음수는 입금이 불가능합니다.");
-						break;
+						return;
 					}
 					else if (money % 500 != 0) {
 						System.out.println("500원 단위로 입금가능함");
