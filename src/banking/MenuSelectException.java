@@ -23,14 +23,14 @@ public class MenuSelectException extends Exception {
             
         } catch (NumberFormatException e) {
         	System.out.println("메뉴 입력 예외 발생됨");
-        	System.out.println("메뉴는 1~5사이의 정수를 입력하세요");
+        	System.out.println("메뉴는 1~6사이의 정수를 입력하세요");
             throw new MenuSelectException();
         }
 
         
-        if (choice < 1 || choice > 5) {
+        if (choice < 1 || choice > 6) {
         	System.out.println("메뉴 입력 예외 발생됨");
-        	System.out.println("메뉴는 1~5사이의 정수를 입력하세요");
+        	System.out.println("메뉴는 1~6사이의 정수를 입력하세요");
             throw new MenuSelectException();
         }
 
